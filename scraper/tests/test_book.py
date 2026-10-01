@@ -1,15 +1,17 @@
 import unittest
-from scrapy.http import HtmlResponse
+from pathlib import Path
 from scraper.spiders.book import BookSpider
 from scrapy.http import HtmlResponse, Request
 from scraper.items import BooksItem
 
+def _get_sample_html_content():
+    html_file_path = Path(__file__).parent / "sample.html"
+    return html_file_path.read_bytes()
+
 class BookSpiderTest(unittest.TestCase):
     def setUp(self):
         self.spider = BookSpider()
-        self.example_html = """
-            Insert the example HTML here
-        """
+        self.example_html = _get_sample_html_content()
         self.response = HtmlResponse(
             url="https://books.toscrape.com",
             body=self.example_html,
