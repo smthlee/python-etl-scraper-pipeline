@@ -11,6 +11,12 @@ class BookSpider(scrapy.Spider):
             yield scrapy.Request(url, callback=self.parse, errback=self.log_error)
 
     def parse(self, response):
+        """
+        @url https://books.toscrape.com
+        @returns items 20 20
+        @returns request 1 50
+        @scrapes url title price
+        """
         for book in response.css("article.product_pod"):
             item = BooksItem()
             item["url"] = book.css("h3 > a::attr(href)").get()
