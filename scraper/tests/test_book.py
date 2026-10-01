@@ -50,7 +50,13 @@ class BookSpiderTest(unittest.TestCase):
 
     def test_parse_creates_pagination_request(self):
         """Test if the spider creates a pagination request correctly."""
-        pass
+        results = list(self.spider.parse(self.response))
+        next_page_request = results[-1]
+        self.assertIsInstance(next_page_request, Request)
+        self.assertEqual(
+            next_page_request.url,
+            "https://books.toscrape.com/catalogue/page-2.html",
+        )
 
 if __name__ == "__main__":
     unittest.main()
