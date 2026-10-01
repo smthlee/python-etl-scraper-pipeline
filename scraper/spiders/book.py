@@ -6,6 +6,10 @@ class BookSpider(scrapy.Spider):
     allowed_domains = ["books.toscrape.com"]
     start_urls = ["https://books.toscrape.com/"]
 
+    def start_requests(self):
+        for url in self.start_urls:
+            yield scrapy.Request(url, callback=self.parse, errback=self.log_error)
+
     def parse(self, response):
         for book in response.css("article.product_pod"):
             item = BooksItem()
