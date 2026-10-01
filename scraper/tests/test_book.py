@@ -30,7 +30,23 @@ class BookSpiderTest(unittest.TestCase):
 
     def test_parse_scrapes_correct_book_information(self):
         """Test if the spider scrapes the correct information for each book."""
-        pass
+        results_generator = self.spider.parse(self.response)
+
+        # Book 1
+        book_1 = next(results_generator)
+        self.assertEqual(
+            book_1["url"], "catalogue/a-light-in-the-attic_1000/index.html"
+        )
+        self.assertEqual(book_1["title"], "A Light in the Attic")
+        self.assertEqual(book_1["price"], "£51.77")
+
+        # Book 2
+        book_2 = next(results_generator)
+        self.assertEqual(
+            book_2["url"], "catalogue/tipping-the-velvet_999/index.html"
+        )
+        self.assertEqual(book_2["title"], "Tipping the Velvet")
+        self.assertEqual(book_2["price"], "£53.74")
 
     def test_parse_creates_pagination_request(self):
         """Test if the spider creates a pagination request correctly."""
